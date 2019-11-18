@@ -1,0 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.datacoper.exception;
+
+import com.datacoper.utils.StringUtil;
+
+/**
+ *
+ * @author alessandro
+ */
+public class DcRuntimeException extends RuntimeException implements DcException {
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -2141200372906252549L;
+
+    public DcRuntimeException(Throwable throwable) {
+        super(throwable);
+    }
+    
+    public DcRuntimeException(String message) {
+        super(message);
+    }
+    
+    public DcRuntimeException(String message, Object... params) {
+        super(StringUtil.format(message, params));
+    }
+}
