@@ -11,12 +11,12 @@ public class FunctionsResourceGenerator extends AbstractTypescriptGenerator {
 
 	@Override
     public String getTemplateName() {
-    	return "functions.resource.resource";
+    	return "functions.resources.resource";
     }
 
     @Override
     public String getPackage() {
-        return "app.resource";
+        return "app.resources";
     }
 
 	@Override

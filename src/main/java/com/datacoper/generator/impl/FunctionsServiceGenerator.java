@@ -11,12 +11,12 @@ public class FunctionsServiceGenerator extends AbstractTypescriptGenerator {
 
 	@Override
     public String getTemplateName() {
-    	return "functions.service.service";
+    	return "functions.services.service";
     }
 
     @Override
     public String getPackage() {
-        return "app.service";
+        return "app.services";
     }
 
 	@Override

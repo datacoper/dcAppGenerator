@@ -1,10 +1,10 @@
 <#assign className = model.className?cap_first>
-import {${model.entityName}} from "../model/${model.entityName}";
 import {Express} from "express";
-import {${model.entityName}Resource} from "../resource/${model.entityName}Resource";
 import {BaseCounter} from "../../arquitetura/generic/BaseCounter";
 import {keys} from "ts-transformer-keys";
-import {${model.entityName}Service} from "../service/${model.entityName}Service";
+import {${model.entityName}} from "../models/${model.entityName}";
+import {${model.entityName}Resource} from "../resources/${model.entityName}Resource";
+import {${model.entityName}Service} from "../services/${model.entityName}Service";
 
 export class ${model.entityName}Module {
 

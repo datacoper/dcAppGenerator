@@ -16,20 +16,29 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    public static void main(String[] args) {
+    private static String projectHome = System.getenv("PROJECT_HOME");
 
-        File file = new File("C:\\Projects\\AppProdutor-Spec\\Datacoper\\Desenv");
-        List<String> modelNames = Arrays.asList("TemplateCatalogoProduto");
+    public static void main(String[] args) throws Exception {
 
-        modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file)));
+        if(projectHome == null){
+            throw new Exception("Variavel de ambiente PROJECT_HOME não definida");
+        }
+
+        File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
+        List<String> modelNames = Arrays.asList("Pais");
+
+        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+
+
+        modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
     }
 
-    private static void gerarCodigo(String entityName, TemplateModel templateModel) {
+    private static void gerarCodigo(String entityName, TemplateModel templateModel, List<EnumProject> modules) {
 
         templateModel.setClassName(entityName);
         templateModel.setEntityName(entityName);
 
-        File fXmlFile = new File("C:\\Projects\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
+        File fXmlFile = new File(projectHome + "\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
 
         try {
             //File fXmlFile = new File(Main.class.getClassLoader().getResource("classesAPPPRODUTOR.xml").getFile());
@@ -50,7 +59,6 @@ public class Main {
 
             aAttibute.forEach(f -> addAttribute(f, templateModel));
 
-            List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
             modules.forEach((module) -> gerar(templateModel, module));
 

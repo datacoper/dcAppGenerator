@@ -4,21 +4,20 @@ import com.datacoper.generator.AbstractDartGenerator;
 import com.datacoper.metadata.TemplateModel;
 import com.github.underscore.lodash.U;
 
-public class ValidadorGenerator extends AbstractDartGenerator {
+public class CommonRepositoryGenerator extends AbstractDartGenerator {
 
-    public ValidadorGenerator(TemplateModel templateModel) {
+    public CommonRepositoryGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
-
     public String getTemplateName() {
-    	return "common.service.validador";
+    	return "common.repository.repository";
     }
 
     @Override
     public String getPackage() {
-        return "base.service";
+        return "base.repository";
     }
 
 	@Override
@@ -28,6 +27,6 @@ public class ValidadorGenerator extends AbstractDartGenerator {
 
 	@Override
 	public String getFileName() {
-		return U.snakeCase(getClassName()).concat("_validador");
+		return U.snakeCase(getClassName()).concat("_repository");
 	}
 }

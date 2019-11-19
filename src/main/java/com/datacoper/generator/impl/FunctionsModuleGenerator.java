@@ -11,12 +11,12 @@ public class FunctionsModuleGenerator extends AbstractTypescriptGenerator {
 
 	@Override
     public String getTemplateName() {
-    	return "functions.module.module";
+    	return "functions.modules.module";
     }
 
     @Override
     public String getPackage() {
-        return "app.module";
+        return "app.modules";
     }
 
 	@Override

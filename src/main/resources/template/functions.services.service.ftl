@@ -1,5 +1,5 @@
-import {${model.entityName}} from "../model/${model.entityName}";
 import {BaseServiceIntegracao} from "../../arquitetura/generic/BaseServiceIntegracao";
+import {${model.entityName}} from "../models/${model.entityName}";
 
 export class ${model.entityName}Service extends BaseServiceIntegracao<${model.entityName}> {
 

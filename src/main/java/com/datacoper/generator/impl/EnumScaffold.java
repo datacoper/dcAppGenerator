@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum EnumScaffold {
-    MODEL_GENERATOR                 (ModelGenerator.class, EnumProject.COMMON),
-    REPOSITORY_GENERATOR            (RepositoryGenerator.class, EnumProject.COMMON),
-    SERVICE_GENERATOR               (ServiceGenerator.class, EnumProject.COMMON),
-    VALIDATOR_GENERATOR             (ValidadorGenerator.class, EnumProject.COMMON),
-    LOADER_GENERATOR                (LoaderGenerator.class, EnumProject.COMMON),
+    COMMON_MODEL_GENERATOR          (CommonModelGenerator.class, EnumProject.COMMON),
+    COMMON_REPOSITORY_GENERATOR     (CommonRepositoryGenerator.class, EnumProject.COMMON),
+    COMMON_SERVICE_GENERATOR        (CommonServiceGenerator.class, EnumProject.COMMON),
+    COMMON_VALIDATOR_GENERATOR      (CommonValidadorGenerator.class, EnumProject.COMMON),
+    COMMON_LOADER_GENERATOR         (CommonLoaderGenerator.class, EnumProject.COMMON),
 
     FUNCTIONS_MODEL_GENERATOR       (FunctionsModelGenerator.class, EnumProject.FUNCTIONS),
     FUNCTIONS_VALIDATOR_GENERATOR   (FunctionsModuleGenerator.class, EnumProject.FUNCTIONS),
