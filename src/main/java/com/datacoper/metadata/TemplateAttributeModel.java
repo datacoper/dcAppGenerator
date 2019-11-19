@@ -206,4 +206,8 @@ public class TemplateAttributeModel {
 	public void setMaxChar(Integer maxChar) {
 		this.maxChar = maxChar;
 	}
+
+	public boolean isIntegracao(){
+		return name.equalsIgnoreCase("chaveIntegracao");
+	}
 }

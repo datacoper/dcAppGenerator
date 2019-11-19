@@ -20,14 +20,14 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        if(projectHome == null){
+        if (projectHome == null) {
             throw new Exception("Variavel de ambiente PROJECT_HOME não definida");
         }
 
         File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
-        List<String> modelNames = Arrays.asList("Pais");
+        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento", "EnderecoPostal", "Cidade", "ServicoConsultoria");
 
-        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
 
 
         modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
@@ -46,6 +46,10 @@ public class Main {
             Xml xml = new Xml(new FileInputStream(fXmlFile), "classes");
 
             String collectionName = buscarCollectionName(xml, entityName);
+
+            if (collectionName == null) {
+                throw new Exception("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+            }
 
             templateModel.setCollectionName(collectionName);
 

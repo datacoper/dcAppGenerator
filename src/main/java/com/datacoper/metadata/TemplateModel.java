@@ -3,7 +3,10 @@ package com.datacoper.metadata;
 import com.github.underscore.lodash.U;
 
 import java.io.File;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Collectors;
 
 public class TemplateModel {
@@ -35,7 +38,14 @@ public class TemplateModel {
     }
 
     public Set<TemplateAttributeModel> getAttributes() {
+        if(isIntegracao()){
+            return getAttributesIntegracao();
+        }
         return Collections.unmodifiableSet(attributes);
+    }
+
+    public Set<TemplateAttributeModel> getAttributesIntegracao() {
+        return Collections.unmodifiableSet(attributes.stream().filter(a -> !a.isIntegracao()).collect(Collectors.toSet()));
     }
 
     public void setAttributes(Set<TemplateAttributeModel> attributes) {
@@ -45,12 +55,12 @@ public class TemplateModel {
         }
     }
 
-    public void addAttribute(TemplateAttributeModel attribute){
-    	this.attributes.add(attribute);
-    	if(attribute.isEntity()){
-    	    addImport(attribute.getType());
+    public void addAttribute(TemplateAttributeModel attribute) {
+        this.attributes.add(attribute);
+        if (attribute.isEntity()) {
+            addImport(attribute.getType());
         }
-	}
+    }
 
     public boolean hasAttributeBoolean() {
         return attributes.stream().anyMatch(TemplateAttributeModel::isBoolean);
@@ -108,17 +118,23 @@ public class TemplateModel {
         return projectParentFile;
     }
 
-	public String getCollectionName() {
-		return collectionName;
-	}
+    public String getCollectionName() {
+        return collectionName;
+    }
 
-	public void setCollectionName(String collectionName) {
-		this.collectionName = collectionName;
-	}
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
 
-	public boolean isMaster() {
+    public boolean isMaster() {
         return true;
     }
+
+    public boolean isIntegracao(){
+        return attributes.stream().anyMatch(a -> a.getName().equalsIgnoreCase("chaveIntegracao"));
+    }
+
+
 
     @Override
     public int hashCode() {
