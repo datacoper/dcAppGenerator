@@ -50,7 +50,9 @@ public class Main {
 
             aAttibute.forEach(f -> addAttribute(f, templateModel));
 
-            gerar(templateModel);
+            List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+
+            modules.forEach((module) -> gerar(templateModel, module));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -122,8 +124,7 @@ public class Main {
         return null;
     }
 
-    private static void gerar(TemplateModel templateModel) {
-        EnumProject enumProject = EnumProject.COMMON;
+    private static void gerar(TemplateModel templateModel, EnumProject enumProject) {
         List<AbstractGenerator> generators = EnumScaffold.getGenerators(enumProject, templateModel);
 
         try {

@@ -153,6 +153,25 @@ public class TemplateAttributeModel {
 		return type;
 	}
 
+	public String getTypescriptType(String type) {
+		if (isText()) {
+			return "string";
+		}
+		if (isNumber() || isDecimal()) {
+			return "number";
+		}
+
+		if (isDate()) {
+			return "Date";
+		}
+
+		if (isBoolean()) {
+			return "boolean";
+		}
+
+		return type;
+	}
+
     public String getFrontType() {
         if (isText()) {
             return "text";

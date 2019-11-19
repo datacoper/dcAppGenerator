@@ -5,7 +5,7 @@ public enum EnumSourceFolder {
 	JAVA("src/main/java"),
 	ANGULAR("src/main/webapp/app"),
 	DART("lib"),
-	FUNCTIONS("functions"),
+	FUNCTIONS("functions/src"),
 
 	;
 	
