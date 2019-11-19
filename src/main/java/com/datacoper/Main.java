@@ -18,8 +18,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        File file = new File("C:\\Projetos\\AppProdutor-Spec\\Datacoper\\Desenv");
-        List<String> modelNames = Arrays.asList("Pais", "UnidadeFederativa");
+        File file = new File("C:\\Projects\\AppProdutor-Spec\\Datacoper\\Desenv");
+        List<String> modelNames = Arrays.asList("TemplateCatalogoProduto");
 
         modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file)));
     }
@@ -29,7 +29,7 @@ public class Main {
         templateModel.setClassName(entityName);
         templateModel.setEntityName(entityName);
 
-        File fXmlFile = new File("C:\\Projetos\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
+        File fXmlFile = new File("C:\\Projects\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
 
         try {
             //File fXmlFile = new File(Main.class.getClassLoader().getResource("classesAPPPRODUTOR.xml").getFile());
@@ -50,7 +50,7 @@ public class Main {
 
             aAttibute.forEach(f -> addAttribute(f, templateModel));
 
-            List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+            List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
             modules.forEach((module) -> gerar(templateModel, module));
 

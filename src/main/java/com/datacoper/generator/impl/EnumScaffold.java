@@ -13,6 +13,7 @@ public enum EnumScaffold {
     REPOSITORY_GENERATOR            (RepositoryGenerator.class, EnumProject.COMMON),
     SERVICE_GENERATOR               (ServiceGenerator.class, EnumProject.COMMON),
     VALIDATOR_GENERATOR             (ValidadorGenerator.class, EnumProject.COMMON),
+    LOADER_GENERATOR                (LoaderGenerator.class, EnumProject.COMMON),
 
     FUNCTIONS_MODEL_GENERATOR       (FunctionsModelGenerator.class, EnumProject.FUNCTIONS),
     FUNCTIONS_VALIDATOR_GENERATOR   (FunctionsModuleGenerator.class, EnumProject.FUNCTIONS),
