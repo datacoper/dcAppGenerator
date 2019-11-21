@@ -9,5 +9,9 @@
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.repository.repository.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.service.service.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.service.validador.ftl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/template/functions.models.model.ftl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/template/functions.modules.module.ftl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/template/functions.resources.resource.ftl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/template/functions.services.service.ftl" charset="UTF-8" />
   </component>
 </project>
