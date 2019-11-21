@@ -28,18 +28,18 @@ public class Main {
         }
 
         File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
-        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
-                "EnderecoPostal", "Cidade", "ServicoConsultoria",
-                "User", "Notification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
-                "UserInfo", "UserCommand", "Notification", "UserDevice", "UserCustom",
-                "Todo", "CommandParameter", "NotificationParameter" ,
-                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
-                "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
-                "TipoProdutividade", "ProdutoCatalogo", "DoseDiferenciadaProdutoCatalogo", "DepoimentoProdutoCatalogo",
-                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia"
-
-        );
-        //List<String> modelNames = Arrays.asList();
+//        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
+//                "EnderecoPostal", "Cidade", "ServicoConsultoria",
+//                "User", "Notification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
+//                "UserInfo", "UserCommand", "Notification", "UserDevice", "UserCustom",
+//                "Todo", "CommandParameter", "NotificationParameter" ,
+//                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
+//                "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
+//                "TipoProdutividade", "ProdutoCatalogo", "DoseDiferenciadaProdutoCatalogo", "DepoimentoProdutoCatalogo",
+//                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia"
+//
+//        );
+        List<String> modelNames = Arrays.asList();
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));
