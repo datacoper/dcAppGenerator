@@ -75,15 +75,15 @@ public class TemplateModel {
     }
 
     public List<String> getAttributeImports() {
-        return attributeImports;
+        return attributeImports.stream().distinct().collect(Collectors.toList());
     }
 
-    public Set<String> getAttributeImportsJava() {
-        return attributeImports.stream().filter(a -> a.startsWith("java.")).collect(Collectors.toSet());
+    public List<String> getAttributeImportsJava() {
+        return attributeImports.stream().filter(a -> a.startsWith("java.")).distinct().collect(Collectors.toList());
     }
 
-    public Set<String> getAttributeImportsDart() {
-        return attributeImports.stream().map(U::snakeCase).collect(Collectors.toSet());
+    public List<String> getAttributeImportsDart() {
+        return attributeImports.stream().map(U::snakeCase).distinct().collect(Collectors.toList());
     }
 
     public String getEntityName() {

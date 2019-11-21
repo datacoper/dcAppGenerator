@@ -33,7 +33,10 @@ public class Main {
                 "User", "Notification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
                 "UserInfo", "UserCommand", "Notification", "UserDevice", "UserCustom",
                 "Todo", "CommandParameter", "NotificationParameter" ,
-                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais"
+                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
+                "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
+                "TipoProdutividade"
+
         );
         //List<String> modelNames = Arrays.asList();
 
