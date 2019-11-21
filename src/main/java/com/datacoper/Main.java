@@ -46,7 +46,6 @@ public class Main {
 
         List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
 
-
         modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
     }
 
@@ -68,10 +67,9 @@ public class Main {
                 templateModel.setCollectionName(collectionName);
                 templateModel.setMode(EnumClassMode.DOCUMENT);
             } else {
-                Logger.getAnonymousLogger().severe("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+                System.out.print("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
                 templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
             }
-
 
             Xml aClass = xml.children("class")
                     .stream()
@@ -186,7 +184,6 @@ public class Main {
             if (!generators.isEmpty()) {
 
                 for (AbstractGenerator generator : generators) {
-                    System.out.print(generator.getJavaFile());
                     generator.process();
                 }
             }
