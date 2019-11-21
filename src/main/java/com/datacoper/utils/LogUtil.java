@@ -19,7 +19,7 @@ public abstract class LogUtil {
         if(log != null) {
         	log.info(message);
         }else {
-    		System.out.println();
+//    		System.out.println();
         }
     	
     }
