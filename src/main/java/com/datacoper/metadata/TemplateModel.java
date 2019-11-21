@@ -1,15 +1,15 @@
 package com.datacoper.metadata;
 
+import com.datacoper.enums.EnumClassMode;
 import com.github.underscore.lodash.U;
 
 import java.io.File;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class TemplateModel {
+
+    private EnumClassMode mode;
 
     private String entityName;
 
@@ -17,13 +17,13 @@ public class TemplateModel {
 
     private String collectionName;
 
-    private Set<String> attributeImports = new TreeSet<>();
+    private List<String> attributeImports = new ArrayList<>();
 
     private File projectParentFile;
 
-    private Set<TemplateAttributeModel> attributes = new HashSet<>();
+    private List<TemplateAttributeModel> attributes = new ArrayList<>();
 
-    private Set<TemplateModelDetail> details = new HashSet<>();
+    private List<TemplateModelDetail> details = new ArrayList<>();
 
     public TemplateModel(File projectParentFile) {
         this.projectParentFile = projectParentFile;
@@ -37,18 +37,18 @@ public class TemplateModel {
         this.className = className;
     }
 
-    public Set<TemplateAttributeModel> getAttributes() {
+    public List<TemplateAttributeModel> getAttributes() {
         if(isIntegracao()){
             return getAttributesIntegracao();
         }
-        return Collections.unmodifiableSet(attributes);
+        return attributes;
     }
 
-    public Set<TemplateAttributeModel> getAttributesIntegracao() {
-        return Collections.unmodifiableSet(attributes.stream().filter(a -> !a.isIntegracao()).collect(Collectors.toSet()));
+    public List<TemplateAttributeModel> getAttributesIntegracao() {
+        return attributes.stream().filter(a -> !a.isIntegracao()).collect(Collectors.toList());
     }
 
-    public void setAttributes(Set<TemplateAttributeModel> attributes) {
+    public void setAttributes(List<TemplateAttributeModel> attributes) {
         this.attributes = attributes;
         for (TemplateAttributeModel templateAttributeModel : attributes) {
             attributeImports.add(templateAttributeModel.getType());
@@ -74,7 +74,7 @@ public class TemplateModel {
         return attributeImports.add(importPackage);
     }
 
-    public Set<String> getAttributeImports() {
+    public List<String> getAttributeImports() {
         return attributeImports;
     }
 
@@ -102,11 +102,11 @@ public class TemplateModel {
         return !details.isEmpty();
     }
 
-    public Set<TemplateModelDetail> getDetails() {
+    public List<TemplateModelDetail> getDetails() {
         return details;
     }
 
-    public void setDetails(Set<TemplateModelDetail> details) {
+    public void setDetails(List<TemplateModelDetail> details) {
         this.details = details;
     }
 
@@ -161,4 +161,19 @@ public class TemplateModel {
         return true;
     }
 
+    public EnumClassMode getMode() {
+        return mode;
+    }
+
+    public void setMode(EnumClassMode mode) {
+        this.mode = mode;
+    }
+
+    public boolean isDocument(){
+        return mode == EnumClassMode.DOCUMENT;
+    }
+
+     public boolean isSubDocument(){
+		return mode == EnumClassMode.SUB_DOCUMENT;
+	}
 }

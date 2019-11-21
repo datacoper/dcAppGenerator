@@ -1,5 +1,7 @@
 package com.datacoper.metadata;
 
+import com.datacoper.enums.EnumAttributeMode;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Objects;
@@ -16,6 +18,7 @@ public class TemplateAttributeModel {
     private boolean required;
     private Integer minChar;
 	private Integer maxChar;
+	private EnumAttributeMode mode;
 
 
 	public TemplateAttributeModel() {
@@ -209,5 +212,33 @@ public class TemplateAttributeModel {
 
 	public boolean isIntegracao(){
 		return name.equalsIgnoreCase("chaveIntegracao");
+	}
+
+	public EnumAttributeMode getMode() {
+		return mode;
+	}
+
+	public void setMode(EnumAttributeMode mode) {
+		this.mode = mode;
+	}
+
+	public boolean isInternal(){
+		return mode == EnumAttributeMode.INTERNAL;
+	}
+
+	public boolean isOneToOne(){
+		return mode == EnumAttributeMode.ONE_TO_ONE;
+	}
+
+	public boolean isOneToMany(){
+		return mode == EnumAttributeMode.ONE_TO_MANY;
+	}
+
+	public boolean isCollection(){
+		return mode == EnumAttributeMode.COLLECTION;
+	}
+
+	public boolean isComposite(){
+		return mode == EnumAttributeMode.COMPOSITE;
 	}
 }

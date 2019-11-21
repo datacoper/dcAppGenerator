@@ -1,5 +1,7 @@
 package com.datacoper;
 
+import com.datacoper.enums.EnumAttributeMode;
+import com.datacoper.enums.EnumClassMode;
 import com.datacoper.enums.EnumProject;
 import com.datacoper.generator.AbstractGenerator;
 import com.datacoper.generator.impl.EnumScaffold;
@@ -12,6 +14,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -25,7 +28,18 @@ public class Main {
         }
 
         File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
-        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento", "EnderecoPostal", "Cidade", "ServicoConsultoria");
+        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
+                "EnderecoPostal", "Cidade", "ServicoConsultoria",
+                "User", "Notification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
+                "UserInfo", "UserCommand", "Notification", "UserDevice", "UserCustom",
+                "Todo", "CommandParameter", "NotificationParameter" ,
+                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais"
+        );
+        //List<String> modelNames = Arrays.asList();
+
+        if (args.length != 0) {
+            modelNames = Arrays.asList(args[0].split(","));
+        }
 
         List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
 
@@ -47,11 +61,14 @@ public class Main {
 
             String collectionName = buscarCollectionName(xml, entityName);
 
-            if (collectionName == null) {
-                throw new Exception("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+            if (collectionName != null) {
+                templateModel.setCollectionName(collectionName);
+                templateModel.setMode(EnumClassMode.DOCUMENT);
+            } else {
+                Logger.getAnonymousLogger().severe("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+                templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
             }
 
-            templateModel.setCollectionName(collectionName);
 
             Xml aClass = xml.children("class")
                     .stream()
@@ -62,7 +79,6 @@ public class Main {
             ArrayList<Xml> aAttibute = aClass.child("attributes").children("attribute");
 
             aAttibute.forEach(f -> addAttribute(f, templateModel));
-
 
             modules.forEach((module) -> gerar(templateModel, module));
 
@@ -80,6 +96,30 @@ public class Main {
         att.setType(attibute.optString("type"));
         att.setTypeSimpleName(attibute.optString("type"));
         att.setLabel(getProperty(attibute, "label"));
+
+        String mode = attibute.optString("mode");
+
+        switch (mode){
+            case "directToField":
+                att.setMode(EnumAttributeMode.INTERNAL);
+                break;
+
+            case "oneToOne":
+                att.setMode(EnumAttributeMode.ONE_TO_ONE);
+                break;
+
+            case "oneToMany":
+                att.setMode(EnumAttributeMode.ONE_TO_MANY);
+                break;
+
+            case "directMap":
+                att.setMode(EnumAttributeMode.COLLECTION);
+                break;
+
+            case "composite":
+                att.setMode(EnumAttributeMode.COMPOSITE);
+                break;
+        }
 
         try {
             att.setRequired(attibute.optString("required").equals("S"));

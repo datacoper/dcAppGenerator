@@ -14,7 +14,7 @@ import 'package:produtor_common/base/utils/date_util.dart';
 <#list model.getAttributeImportsDart() as import>
 import 'package:produtor_common/base/model/${import}.dart';
 </#list>
-import 'package:rxdart/rxdart.dart';
+import 'package:rxdart/subjects.dart';
 
 
 part '${classNameFileName}.g.dart';

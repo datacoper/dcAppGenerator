@@ -1,33 +1,37 @@
 package com.datacoper.generator.impl;
 
+import com.datacoper.enums.EnumClassMode;
 import com.datacoper.enums.EnumProject;
 import com.datacoper.generator.AbstractGenerator;
 import com.datacoper.metadata.TemplateModel;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public enum EnumScaffold {
-    COMMON_MODEL_GENERATOR          (CommonModelGenerator.class, EnumProject.COMMON),
-    COMMON_REPOSITORY_GENERATOR     (CommonRepositoryGenerator.class, EnumProject.COMMON),
-    COMMON_SERVICE_GENERATOR        (CommonServiceGenerator.class, EnumProject.COMMON),
-    COMMON_VALIDATOR_GENERATOR      (CommonValidadorGenerator.class, EnumProject.COMMON),
-    COMMON_LOADER_GENERATOR         (CommonLoaderGenerator.class, EnumProject.COMMON),
+    COMMON_MODEL_GENERATOR          (CommonModelGenerator.class,        EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_REPOSITORY_GENERATOR     (CommonRepositoryGenerator.class,   EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_SERVICE_GENERATOR        (CommonServiceGenerator.class,      EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_VALIDATOR_GENERATOR      (CommonValidadorGenerator.class,    EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_LOADER_GENERATOR         (CommonLoaderGenerator.class,       EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
 
-    FUNCTIONS_MODEL_GENERATOR       (FunctionsModelGenerator.class, EnumProject.FUNCTIONS),
-    FUNCTIONS_VALIDATOR_GENERATOR   (FunctionsModuleGenerator.class, EnumProject.FUNCTIONS),
-    FUNCTIONS_REPOSITORY_GENERATOR  (FunctionsResourceGenerator.class, EnumProject.FUNCTIONS),
-    FUNCTIONS_SERVICE_GENERATOR     (FunctionsServiceGenerator.class, EnumProject.FUNCTIONS),
+    FUNCTIONS_MODEL_GENERATOR       (FunctionsModelGenerator.class,     EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    FUNCTIONS_MODULE_GENERATOR      (FunctionsModuleGenerator.class,    EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT)),
+    FUNCTIONS_RESOURCE_GENERATOR    (FunctionsResourceGenerator.class,  EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT)),
+    FUNCTIONS_SERVICE_GENERATOR     (FunctionsServiceGenerator.class,   EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT)),
 
 	;
     private final Class<? extends AbstractGenerator> generator;
     
     private final EnumProject projectType;
+    private final List<EnumClassMode> classModes;
 
-    private EnumScaffold(Class<? extends AbstractGenerator> generator, EnumProject projectType) {
+    private EnumScaffold(Class<? extends AbstractGenerator> generator, EnumProject projectType, List<EnumClassMode> classModes) {
         this.generator = generator;
         this.projectType = projectType;
+        this.classModes = classModes;
     }
 
     public AbstractGenerator getGenerator(TemplateModel templateModel) {
@@ -57,11 +61,15 @@ public enum EnumScaffold {
         List<AbstractGenerator> generators = new ArrayList<>();
         
         for (EnumScaffold value : values()) {
-            if (value.getProjectType().equals(projectType)) {
+            if (value.getProjectType().equals(projectType) && value.getClassModes().contains(templateModel.getMode())) {
             	generators.add(value.getGenerator(templateModel));
             }
         }
         
         return generators;
+    }
+
+    public List<EnumClassMode> getClassModes() {
+        return classModes;
     }
 }

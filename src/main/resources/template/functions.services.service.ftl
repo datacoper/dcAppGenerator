@@ -11,7 +11,7 @@ export class ${model.entityName}Service extends BaseServiceIntegracao<${model.en
 export class ${model.entityName}Service extends BaseServiceCrud<${model.entityName}> {
 </#if>
 
-    constructor(exports: any, keys: Array<keyof ${model.entityName}>) {
+    constructor(keys: Array<keyof ${model.entityName}>) {
         super(${model.entityName}, keys);
     }
 }
