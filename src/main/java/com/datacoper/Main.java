@@ -35,7 +35,8 @@ public class Main {
                 "Todo", "CommandParameter", "NotificationParameter" ,
                 "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
                 "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
-                "TipoProdutividade"
+                "TipoProdutividade", "ProdutoCatalogo", "DoseDiferenciadaProdutoCatalogo", "DepoimentoProdutoCatalogo",
+                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia"
 
         );
         //List<String> modelNames = Arrays.asList();
@@ -67,7 +68,7 @@ public class Main {
                 templateModel.setCollectionName(collectionName);
                 templateModel.setMode(EnumClassMode.DOCUMENT);
             } else {
-                System.out.print("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+                System.out.println("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
                 templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
             }
 
