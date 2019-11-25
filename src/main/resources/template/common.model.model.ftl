@@ -26,8 +26,12 @@ class ${className} extends EntityBloc {
   String id;
 
 <#list model.attributes as attribute>
-<#if attribute.isEntity()>
+<#if attribute.isOneToMany() && attribute.isEntity()>
+  final _${attribute.name?uncap_first}SB = BehaviorSubject<List<dynamic>>();
+<#elseif attribute.isEntity()>
   final _${attribute.name?uncap_first}SB = BehaviorSubject<dynamic>();
+<#elseif attribute.isOneToMany() && !attribute.isEntity()>
+  final _${attribute.name?uncap_first}SB = BehaviorSubject<List<${attribute.typeSimpleName}>>();
 <#else>
   final _${attribute.name?uncap_first}SB = BehaviorSubject<${attribute.typeSimpleName}>();
 </#if>
@@ -37,22 +41,36 @@ class ${className} extends EntityBloc {
 <#if attribute.isEntity()>
   @JsonKey(fromJson: lazyLoadEntityFromJson, toJson: lazyLoadEntityToJson)
 </#if>
-<#if attribute.isEntity()>
+<#if attribute.isOneToMany() && attribute.isEntity()>
+    FutureOr<List<${attribute.typeSimpleName}>> get ${attribute.name?uncap_first} {
+      if(_${attribute.name?uncap_first}SB.value is Lazy)
+        return _${attribute.name?uncap_first}SB.value.load();
+      return _${attribute.name?uncap_first}SB.value;
+    }
+<#elseif attribute.isEntity()>
   FutureOr<${attribute.typeSimpleName}> get ${attribute.name?uncap_first} {
     if(_${attribute.name?uncap_first}SB.value is Lazy)
       return _${attribute.name?uncap_first}SB.value.load();
     return _${attribute.name?uncap_first}SB.value;
   }
+<#elseif attribute.isOneToMany() && !attribute.isEntity()>
+  List<${attribute.typeSimpleName}> get ${attribute.name?uncap_first} => _${attribute.name?uncap_first}SB.value;
 <#else>
   ${attribute.typeSimpleName} get ${attribute.name?uncap_first} => _${attribute.name?uncap_first}SB.value;
 </#if>
-<#if attribute.isEntity()>
+<#if attribute.isOneToMany() && attribute.isEntity()>
+  set ${attribute.name?uncap_first}(List<dynamic> value) => _${attribute.name?uncap_first}SB.sink.add(value);
+<#elseif attribute.isEntity()>
   set ${attribute.name?uncap_first}(dynamic value) => _${attribute.name?uncap_first}SB.sink.add(value);
+<#elseif attribute.isOneToMany() && !attribute.isEntity()>
+  set ${attribute.name?uncap_first}(List<dynamic> value) => _${attribute.name?uncap_first}SB.sink.add(value);
 <#else>
   set ${attribute.name?uncap_first}(${attribute.typeSimpleName} value) => _${attribute.name?uncap_first}SB.sink.add(value);
 </#if>
 <#if attribute.isEntity()>
   Stream<${attribute.typeSimpleName}> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream as Stream<${attribute.typeSimpleName}>;
+<#elseif attribute.isOneToMany()>
+  Stream<List<${attribute.typeSimpleName}>> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream as Stream<List<${attribute.typeSimpleName}>>;
 <#else>
   Stream<${attribute.typeSimpleName}> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream;
 </#if>

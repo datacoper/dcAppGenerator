@@ -39,7 +39,7 @@ public class Main {
 //                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia"
 //
 //        );
-        List<String> modelNames = Arrays.asList();
+        List<String> modelNames = Arrays.asList("ProdutoCatalogo");
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));

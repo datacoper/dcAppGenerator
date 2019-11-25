@@ -112,6 +112,7 @@ public class TemplateAttributeModel {
     public boolean isText() {
         return type.equals(String.class.getName()) ||
 				type.equals("String") ||
+				type.equals("Image") ||
                 type.equals(Character.class.getName());
     }
 
