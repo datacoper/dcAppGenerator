@@ -38,9 +38,6 @@ public class TemplateModel {
     }
 
     public List<TemplateAttributeModel> getAttributes() {
-        if(isIntegracao()){
-            return getAttributesIntegracao();
-        }
         return attributes;
     }
 

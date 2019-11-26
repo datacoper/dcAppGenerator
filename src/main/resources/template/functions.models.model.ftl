@@ -1,4 +1,9 @@
 <#assign className = model.className?cap_first>
+<#if model.isIntegracao()>
+    <#assign attributes = model.getAttributesIntegracao()>
+<#else>
+    <#assign attributes = model.getAttributes()>
+</#if>
 <#if model.isIntegracao() >
 import {IEntityIntegracao} from "../../arquitetura/interface/IEntityIntegracao";
 <#else >
@@ -19,7 +24,7 @@ export class ${className} extends IEntityIntegracao {
 export class ${className} extends IEntity {
 </#if>
 
-<#list model.getAttributes() as attribute>
+<#list attributes as attribute>
 <#if attribute.isOneToOne()>
     @Reference(${attribute.typeSimpleName})
 </#if>
