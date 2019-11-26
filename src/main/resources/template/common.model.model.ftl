@@ -7,8 +7,13 @@ import 'package:bloc/base/datacoper_type/future_resolver.dart';
 import 'package:bloc/base/endpoints.dart';
 import 'package:bloc/base/interfaces/entity_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:produtor_common/arquitetura/event/change_event.dart';
+import 'package:produtor_common/arquitetura/event/entity_event.dart';
+import 'package:produtor_common/arquitetura/proxy/collection.dart';
 import 'package:produtor_common/arquitetura/interfaces/i_vigencia.dart';
 import 'package:produtor_common/arquitetura/proxy/proxy_manager.dart';
+import 'package:produtor_common/arquitetura/proxy/reference.dart';
+import 'package:produtor_common/base/converters/converter.dart';
 import 'package:produtor_common/base/converters/entity_converter.dart';
 import 'package:produtor_common/base/utils/date_util.dart';
 <#list model.getAttributeImportsDart() as import>
@@ -20,59 +25,49 @@ import 'package:rxdart/subjects.dart';
 part '${classNameFileName}.g.dart';
 
 @JsonSerializable()
-class ${className} extends EntityBloc {
+class ${className} extends EntityEvent {
 
   @override
   String id;
 
 <#list model.attributes as attribute>
-<#if attribute.isOneToMany() && attribute.isEntity()>
-  final _${attribute.name?uncap_first}SB = BehaviorSubject<List<dynamic>>();
-<#elseif attribute.isEntity()>
-  final _${attribute.name?uncap_first}SB = BehaviorSubject<dynamic>();
-<#elseif attribute.isOneToMany() && !attribute.isEntity()>
-  final _${attribute.name?uncap_first}SB = BehaviorSubject<List<${attribute.typeSimpleName}>>();
-<#else>
-  final _${attribute.name?uncap_first}SB = BehaviorSubject<${attribute.typeSimpleName}>();
-</#if>
+<#if attribute.isInternal()>
+  ${attribute.typeSimpleName} _${attribute.name?uncap_first};
 <#if attribute.isDate()>
   @JsonKey(fromJson: rawDateTime, toJson: rawDateTime)
 </#if>
-<#if attribute.isEntity()>
-  @JsonKey(fromJson: lazyLoadEntityFromJson, toJson: lazyLoadEntityToJson)
-</#if>
-<#if attribute.isOneToMany() && attribute.isEntity()>
-    FutureOr<List<${attribute.typeSimpleName}>> get ${attribute.name?uncap_first} {
-      if(_${attribute.name?uncap_first}SB.value is Lazy)
-        return _${attribute.name?uncap_first}SB.value.load();
-      return _${attribute.name?uncap_first}SB.value;
-    }
-<#elseif attribute.isEntity()>
-  FutureOr<${attribute.typeSimpleName}> get ${attribute.name?uncap_first} {
-    if(_${attribute.name?uncap_first}SB.value is Lazy)
-      return _${attribute.name?uncap_first}SB.value.load();
-    return _${attribute.name?uncap_first}SB.value;
+  ${attribute.typeSimpleName} get ${attribute.name?uncap_first} => _${attribute.name?uncap_first};
+  set ${attribute.name?uncap_first}(${attribute.typeSimpleName} value) {
+    changes.sink.add(new ChangeEvent("${attribute.name?uncap_first}", _${attribute.name?uncap_first}, value));
+    _${attribute.name?uncap_first} = value;
   }
-<#elseif attribute.isOneToMany() && !attribute.isEntity()>
-  List<${attribute.typeSimpleName}> get ${attribute.name?uncap_first} => _${attribute.name?uncap_first}SB.value;
-<#else>
-  ${attribute.typeSimpleName} get ${attribute.name?uncap_first} => _${attribute.name?uncap_first}SB.value;
-</#if>
-<#if attribute.isOneToMany() && attribute.isEntity()>
-  set ${attribute.name?uncap_first}(List<dynamic> value) => _${attribute.name?uncap_first}SB.sink.add(value);
-<#elseif attribute.isEntity()>
-  set ${attribute.name?uncap_first}(dynamic value) => _${attribute.name?uncap_first}SB.sink.add(value);
-<#elseif attribute.isOneToMany() && !attribute.isEntity()>
-  set ${attribute.name?uncap_first}(List<dynamic> value) => _${attribute.name?uncap_first}SB.sink.add(value);
-<#else>
-  set ${attribute.name?uncap_first}(${attribute.typeSimpleName} value) => _${attribute.name?uncap_first}SB.sink.add(value);
-</#if>
-<#if attribute.isEntity()>
-  Stream<${attribute.typeSimpleName}> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream as Stream<${attribute.typeSimpleName}>;
+<#elseif attribute.isOneToOne()>
+  <#if attribute.isEntity()>
+  Reference _${attribute.name?uncap_first};
+  @JsonKey(fromJson: referenceFromJson, toJson: referenceToJson)
+  Reference get ${attribute.name?uncap_first} => _${attribute.name?uncap_first};
+  set ${attribute.name?uncap_first}(Reference value) {
+    changes.sink.add(new ChangeEvent("${attribute.name?uncap_first}", _${attribute.name?uncap_first}, value));
+    _${attribute.name?uncap_first} = value;
+  }
+  </#if>
 <#elseif attribute.isOneToMany()>
-  Stream<List<${attribute.typeSimpleName}>> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream as Stream<List<${attribute.typeSimpleName}>>;
-<#else>
-  Stream<${attribute.typeSimpleName}> get ${attribute.name?uncap_first}Stream => _${attribute.name?uncap_first}SB.stream;
+  <#if attribute.isEntity()>
+  List<${attribute.typeSimpleName}> _${attribute.name?uncap_first};
+  List<${attribute.typeSimpleName}> get ${attribute.name?uncap_first} => _${attribute.name?uncap_first};
+  set ${attribute.name?uncap_first}(List<${attribute.typeSimpleName}> value) {
+    changes.sink.add(new ChangeEvent("${attribute.name?uncap_first}", _${attribute.name?uncap_first}, value));
+    _${attribute.name?uncap_first} = value;
+  }
+  </#if>
+<#elseif attribute.isCollection()>
+  Collection _${attribute.name?uncap_first};
+  @JsonKey(fromJson: collectionFromJson, toJson: collectionToJson)
+  Collection get ${attribute.name?uncap_first} => _${attribute.name?uncap_first};
+  set ${attribute.name?uncap_first}(Collection value) {
+    changes.sink.add(new ChangeEvent("${attribute.name?uncap_first}", _${attribute.name?uncap_first}, value));
+    _${attribute.name?uncap_first} = value;
+  }
 </#if>
 
 </#list>
@@ -102,8 +97,6 @@ class ${className} extends EntityBloc {
 
   @override
   void dispose() {
-<#list model.attributes as attribute>
-    _${attribute.name?uncap_first}SB.close();
-</#list>
+    super.dispose();
   }
 }

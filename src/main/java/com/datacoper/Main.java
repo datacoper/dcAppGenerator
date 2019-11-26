@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -36,10 +37,13 @@ public class Main {
 //                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
 //                "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
 //                "TipoProdutividade", "ProdutoCatalogo", "DoseDiferenciadaProdutoCatalogo", "DepoimentoProdutoCatalogo",
-//                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia"
+//                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia",
+//                "Clima", "PrevisaoHoraria", "PrevisaoHorariaList", "PrevisaoDiariaList", "PrevisaoFlags", "PrevisaoDiaria",
+//                "Command", "RegistroOcorrencia", "NivelComprometimento", "PlanoCultivo", "Produtividade", "ImagemOcorrencia",
+//                "TipoOcorrencia", "RomaneioAgricola", "DescontoRomaneioAgricola", "ProdutorRomaneioAgricola"
 //
 //        );
-        List<String> modelNames = Arrays.asList("ProdutoCatalogo");
+        List<String> modelNames = Arrays.asList("ProdutoCatalogo", "User");
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));
@@ -72,15 +76,18 @@ public class Main {
                 templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
             }
 
-            Xml aClass = xml.children("class")
+            Optional<Xml> aClassOptional = xml.children("class")
                     .stream()
                     .filter(x -> x.optString("name").equalsIgnoreCase(entityName))
-                    .findFirst()
-                    .get();
+                    .findFirst();
 
-            ArrayList<Xml> aAttibute = aClass.child("attributes").children("attribute");
+            if(!aClassOptional.isPresent()){
+                throw new Exception("Nome da classe não foi ecnotrado. {Entidade: " + entityName + "}");
+            }
 
-            aAttibute.forEach(f -> addAttribute(f, templateModel));
+            ArrayList<Xml> aAttibute = aClassOptional.get().child("attributes").children("attribute");
+
+            aAttibute.forEach(f -> addAttribute(f, xml, templateModel));
 
             modules.forEach((module) -> gerar(templateModel, module));
 
@@ -89,7 +96,7 @@ public class Main {
         }
     }
 
-    private static void addAttribute(Xml attibute, TemplateModel templateModel) {
+    private static void addAttribute(Xml attibute, Xml xml, TemplateModel templateModel) {
         if (attibute.optString("name").equalsIgnoreCase("id"))
             return;
 
@@ -100,6 +107,7 @@ public class Main {
         att.setLabel(getProperty(attibute, "label"));
 
         String mode = attibute.optString("mode");
+
 
         switch (mode){
             case "directToField":

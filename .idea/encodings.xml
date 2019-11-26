@@ -6,6 +6,7 @@
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="ISO-8859-1" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.loader.loader.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.model.model.ftl" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/resources/template/common.model.model2.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.repository.repository.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.service.service.ftl" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/src/main/resources/template/common.service.validador.ftl" charset="UTF-8" />
