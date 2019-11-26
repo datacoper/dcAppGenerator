@@ -109,6 +109,10 @@ public class TemplateAttributeModel {
                 type.equals("Date");
     }
 
+	public boolean isGeoPoint() {
+		return type.equals("GeoPoint");
+	}
+
     public boolean isText() {
         return type.equals(String.class.getName()) ||
 				type.equals("String") ||
