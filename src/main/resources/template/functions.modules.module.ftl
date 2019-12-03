@@ -2,20 +2,23 @@
 import {Express} from "express";
 import {BaseCounter} from "../../arquitetura/generic/BaseCounter";
 import {GenericModule} from "../../arquitetura/generic/GenericModule";
-import {keys} from "ts-transformer-keys";
 import {${model.entityName}} from "../models/${model.entityName}";
 import {${model.entityName}Resource} from "../resources/${model.entityName}Resource";
 import {${model.entityName}Service} from "../services/${model.entityName}Service";
 
 export default class ${model.entityName}Module extends GenericModule<${model.entityName}> {
 
-    constructor(expressApp: Express) {
+    constructor(appWebApi: Express, appIntegracao: Express, appCronJob: Express) {
         super({collectionName: "${model.collectionName}"});
 
-        this.service = new ${model.entityName}Service(keys<${model.entityName}>());
+        let keys = [<#list model.getAttributes() as key>"${key.name}", </#list>]
+
+        this.service = new ${model.entityName}Service(keys);
         this.counter = new BaseCounter(this.collectionName);
-        new ${model.entityName}Resource(expressApp, this.collectionName, this.service, this.counter);
+        new ${model.entityName}Resource(appWebApi, this.collectionName, this.service, this.counter);
 
         this.registerTriggers();
+        this.registerIntegracoes(appIntegracao);
+        this.registerCronJobs(appCronJob);
     }
 }

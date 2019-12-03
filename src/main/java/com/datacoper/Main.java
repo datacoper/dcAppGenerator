@@ -31,19 +31,24 @@ public class Main {
         File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
 //        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
 //                "EnderecoPostal", "Cidade", "ServicoConsultoria",
-//                "User", "Notification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
-//                "UserInfo", "UserCommand", "Notification", "UserDevice", "UserCustom",
-//                "Todo", "CommandParameter", "NotificationParameter" ,
+//                "User", "UserNotification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
+//                "UserInfo", "UserCommand", "UserNotification", "UserDevice", "UserCustom",
+//                "Todo", "UserCommandParameter", "UserNotificationParameter" ,
 //                "UnidadeFederativa", "ProdutorDadosAdicionais", "Pais", "Atendimento", "RelatorioTempoReal", "VinculoRecomendacaoProduto",
 //                "Propriedade", "ServicoRelatorioTempoReal", "RecomendacaoProduto", "Produto", "Cultura", "Safra", "TaxonomiaProduto",
 //                "TipoProdutividade", "ProdutoCatalogo", "DoseDiferenciadaProdutoCatalogo", "DepoimentoProdutoCatalogo",
 //                "ArquivoGaleriaProdutoCatalogo", "OcorrenciaDegenerativaCatalogo", "TipoOcorrencia",
 //                "Clima", "PrevisaoHoraria", "PrevisaoHorariaList", "PrevisaoDiariaList", "PrevisaoFlags", "PrevisaoDiaria",
 //                "Command", "RegistroOcorrencia", "NivelComprometimento", "PlanoCultivo", "Produtividade", "ImagemOcorrencia",
-//                "TipoOcorrencia", "RomaneioAgricola", "DescontoRomaneioAgricola", "ProdutorRomaneioAgricola"
+//                "TipoOcorrencia", "RomaneioAgricola", "DescontoRomaneioAgricola", "ProdutorRomaneioAgricola",
+//                "ProdutoCatalogo", "CulturaCatalogo", "CategoriaProdutoCatalogo", "ClasseProdutoCatalogo", "MarcaCatalogo",
+//                "CulturaOcorrenciaDegenerativaCatalogo", "Cotacao", "ProdutoCotacao", "LocalCotacao", "FonteCotacao",
+//                "GrupoProdutoCotacao", "TipoProdutoCotacao"
 //
 //        );
-        List<String> modelNames = Arrays.asList("ProdutoCatalogo", "User");
+        List<String> modelNames = Arrays.asList(
+                "User", "UserCommand"
+        );
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));
