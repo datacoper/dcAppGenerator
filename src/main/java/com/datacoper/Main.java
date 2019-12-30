@@ -43,11 +43,19 @@ public class Main {
 //                "TipoOcorrencia", "RomaneioAgricola", "DescontoRomaneioAgricola", "ProdutorRomaneioAgricola",
 //                "ProdutoCatalogo", "CulturaCatalogo", "CategoriaProdutoCatalogo", "ClasseProdutoCatalogo", "MarcaCatalogo",
 //                "CulturaOcorrenciaDegenerativaCatalogo", "Cotacao", "ProdutoCotacao", "LocalCotacao", "FonteCotacao",
-//                "GrupoProdutoCotacao", "TipoProdutoCotacao"
-//
+//                "GrupoProdutoCotacao", "TipoProdutoCotacao", "NaturezaFisica", "Coordenada", "UserProfile", "TermosCondicoesUso",
+//                "SolicitacaoAcesso", "CatalogoProduto", "CatalogoProdutoCultura", "CatalogoProdutoCulturaProduto"
 //        );
+
         List<String> modelNames = Arrays.asList(
-                "User", "UserCommand"
+                //"CaseSistemaMenu"
+//                "IconeSistema"
+//                "CaseSistemaCategoria"
+//                "TemplateCatalogoProduto"
+//                 "NewsTime"
+//                "NewsRecord"
+//                "Onboarding"
+                "Todo"
         );
 
         if (args.length != 0) {
@@ -55,6 +63,7 @@ public class Main {
         }
 
         List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
+//        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
         modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
     }

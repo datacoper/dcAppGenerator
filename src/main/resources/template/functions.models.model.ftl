@@ -34,7 +34,7 @@ export class ${className} extends IEntity {
 <#if attribute.isCollection()>
     ${attribute.name?uncap_first}?: ISubCollection<${attribute.getTypescriptType(attribute.typeSimpleName)}>;
 <#elseif attribute.isOneToMany()>
-    ${attribute.name?uncap_first}: ${attribute.getTypescriptType(attribute.typeSimpleName)}[];
+    ${attribute.name?uncap_first}: ${attribute.getTypescriptType(attribute.typeSimpleName)}[] = [];
 <#else>
     ${attribute.name?uncap_first}: ${attribute.getTypescriptType(attribute.typeSimpleName)};
 </#if>

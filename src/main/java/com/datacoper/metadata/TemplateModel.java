@@ -71,6 +71,10 @@ public class TemplateModel {
         return attributes.stream().anyMatch(TemplateAttributeModel::isGeoPoint);
     }
 
+    public boolean hasAttributeFileInfo() {
+        return attributes.stream().anyMatch(TemplateAttributeModel::isFileInfo);
+    }
+
     public boolean addImport(String importPackage) {
         return attributeImports.add(importPackage);
     }

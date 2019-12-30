@@ -113,6 +113,10 @@ public class TemplateAttributeModel {
 		return type.equals("GeoPoint");
 	}
 
+	public boolean isFileInfo() {
+		return type.equals("FileInfo");
+	}
+
     public boolean isText() {
         return type.equals(String.class.getName()) ||
 				type.equals("String") ||

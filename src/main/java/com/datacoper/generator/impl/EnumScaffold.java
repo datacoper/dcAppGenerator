@@ -11,11 +11,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum EnumScaffold {
-    COMMON_MODEL_GENERATOR          (CommonModelGenerator.class,        EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_MODEL_GENERATOR              (CommonModelGenerator.class,            EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     COMMON_REPOSITORY_GENERATOR     (CommonRepositoryGenerator.class,   EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+    COMMON_REPOSITORY_IMPL_GENERATOR    (CommonRepositoryImplGenerator.class,   EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT)),
     COMMON_SERVICE_GENERATOR        (CommonServiceGenerator.class,      EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     COMMON_VALIDATOR_GENERATOR      (CommonValidadorGenerator.class,    EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
-    COMMON_LOADER_GENERATOR         (CommonLoaderGenerator.class,       EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
+//    //COMMON_LOADER_GENERATOR         (CommonLoaderGenerator.class,       EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
 
     FUNCTIONS_MODEL_GENERATOR       (FunctionsModelGenerator.class,     EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     FUNCTIONS_MODULE_GENERATOR      (FunctionsModuleGenerator.class,    EnumProject.FUNCTIONS, Arrays.asList(EnumClassMode.DOCUMENT)),
