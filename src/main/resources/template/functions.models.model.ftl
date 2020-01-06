@@ -15,12 +15,14 @@ import {Collection, ISubCollection, SubCollection} from "fireorm";
 import {${import}} from "./${import}";
 </#list>
 
-<#if model.isDocument() >
+<#if model.isCollection() >
 @Collection("${model.collectionName}")
 </#if>
 <#if model.isIntegracao() >
 export class ${className} extends IEntityIntegracao {
-<#else >
+<#elseif model.isComposite()>
+export interface ${className} {
+<#else>
 export class ${className} extends IEntity {
 </#if>
 
@@ -36,7 +38,11 @@ export class ${className} extends IEntity {
 <#elseif attribute.isOneToMany()>
     ${attribute.name?uncap_first}: ${attribute.getTypescriptType(attribute.typeSimpleName)}[] = [];
 <#else>
+<#if model.isComposite()>
+    ${attribute.name?uncap_first}?: ${attribute.getTypescriptType(attribute.typeSimpleName)};
+<#else>
     ${attribute.name?uncap_first}: ${attribute.getTypescriptType(attribute.typeSimpleName)};
+</#if>
 </#if>
 
 </#list>

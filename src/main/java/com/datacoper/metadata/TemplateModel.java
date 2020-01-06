@@ -135,10 +135,9 @@ public class TemplateModel {
         return true;
     }
 
-    public boolean isIntegracao(){
+    public boolean isIntegracao() {
         return attributes.stream().anyMatch(a -> a.getName().equalsIgnoreCase("chaveIntegracao"));
     }
-
 
 
     @Override
@@ -174,11 +173,20 @@ public class TemplateModel {
         this.mode = mode;
     }
 
-    public boolean isDocument(){
+    public boolean isCollection(){
+        return isDocument() || isSubDocument();
+    }
+
+    public boolean isDocument() {
         return mode == EnumClassMode.DOCUMENT;
     }
 
-     public boolean isSubDocument(){
-		return mode == EnumClassMode.SUB_DOCUMENT;
-	}
+    public boolean isSubDocument() {
+        return mode == EnumClassMode.SUB_DOCUMENT;
+    }
+
+    public boolean isComposite() {
+        return mode == EnumClassMode.COMPOSITE;
+    }
+
 }

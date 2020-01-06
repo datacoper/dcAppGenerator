@@ -4,7 +4,7 @@ import com.datacoper.enums.EnumAttributeMode;
 import com.datacoper.enums.EnumClassMode;
 import com.datacoper.enums.EnumProject;
 import com.datacoper.generator.AbstractGenerator;
-import com.datacoper.generator.impl.EnumScaffold;
+import com.datacoper.generator.EnumScaffold;
 import com.datacoper.metadata.TemplateAttributeModel;
 import com.datacoper.metadata.TemplateModel;
 import com.datacoper.utils.Xml;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.logging.Logger;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Main {
@@ -55,15 +55,26 @@ public class Main {
 //                 "NewsTime"
 //                "NewsRecord"
 //                "Onboarding"
-                "Todo"
+//                "Todo"
+//                "SolicitacaoVisitaTecnica"
+//                "PosicaoFinanceiraTitulos"
+//                "Pedido"
+//                "Vendedor",
+//                "Filial",
+//                "PedidoItem",
+//                "PedidoParcela"
+//                "PosicaoSaldoAgricolaProdutor"
+//                "PosicaoSaldoAgricolaIndicadores"
+//                "CulturaCatalogo"
+                "User", "UserInfo", "UserDevice"
         );
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));
         }
 
-        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
-//        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
+//        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
+        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
 
         modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
     }
@@ -76,18 +87,17 @@ public class Main {
         File fXmlFile = new File(projectHome + "\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
 
         try {
-            //File fXmlFile = new File(Main.class.getClassLoader().getResource("classesAPPPRODUTOR.xml").getFile());
 
             Xml xml = new Xml(new FileInputStream(fXmlFile), "classes");
 
-            String collectionName = buscarCollectionName(xml, entityName);
-
-            if (collectionName != null) {
-                templateModel.setCollectionName(collectionName);
-                templateModel.setMode(EnumClassMode.DOCUMENT);
-            } else {
-                System.out.println("Nome da coleção não foi definido. {Entidade: " + entityName + "}");
+            if (isComposite(xml, entityName)) {
+                templateModel.setMode(EnumClassMode.COMPOSITE);
+            } else if(isSubCollection(xml, entityName)) {
+                templateModel.setCollectionName(buscarSubCollectionName(xml, entityName));
                 templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
+            }else {
+                templateModel.setCollectionName( buscarCollectionName(xml, entityName));
+                templateModel.setMode(EnumClassMode.DOCUMENT);
             }
 
             Optional<Xml> aClassOptional = xml.children("class")
@@ -95,7 +105,7 @@ public class Main {
                     .filter(x -> x.optString("name").equalsIgnoreCase(entityName))
                     .findFirst();
 
-            if(!aClassOptional.isPresent()){
+            if (!aClassOptional.isPresent()) {
                 throw new Exception("Nome da classe não foi ecnotrado. {Entidade: " + entityName + "}");
             }
 
@@ -108,6 +118,33 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private static boolean isSubCollection(Xml xml, String name) {
+
+        for (Xml classe : xml.children("class")) {
+            if(classe.string("mode").equalsIgnoreCase("class"))
+            for (Xml att : classe.child("attributes").children("attribute")) {
+                if (att.optString("type").equalsIgnoreCase(name) && att.optString("mode").equalsIgnoreCase("directMap")) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private static boolean isComposite(Xml xml, String name) {
+        for (Xml classe : xml.children("class")) {
+            if(classe.string("mode").equalsIgnoreCase("class"))
+                for (Xml att : classe.child("attributes").children("attribute")) {
+                    if (att.optString("type").equalsIgnoreCase(name) && att.optString("mode").equalsIgnoreCase("composite")) {
+                        return true;
+                    }
+                }
+        }
+
+        return false;
     }
 
     private static void addAttribute(Xml attibute, Xml xml, TemplateModel templateModel) {
@@ -123,7 +160,7 @@ public class Main {
         String mode = attibute.optString("mode");
 
 
-        switch (mode){
+        switch (mode) {
             case "directToField":
                 att.setMode(EnumAttributeMode.INTERNAL);
                 break;
@@ -195,6 +232,20 @@ public class Main {
                     return child.optString("name");
                 }
             }
+        }
+
+        return null;
+    }
+
+    private static String buscarSubCollectionName(Xml xml, String name) {
+
+        for (Xml classe : xml.children("class")) {
+            if(classe.string("mode").equalsIgnoreCase("class"))
+                for (Xml att : classe.child("attributes").children("attribute")) {
+                    if (att.optString("type").equalsIgnoreCase(name) && att.optString("mode").equalsIgnoreCase("directMap")) {
+                        return att.optString("name");
+                    }
+                }
         }
 
         return null;

@@ -7,12 +7,11 @@ import 'package:produtor_common/base/model/${classNameFileName}.dart';
 import 'package:produtor_common/base/repository/${classNameFileName}_repository.dart';
 import 'package:produtor_common/base/session.dart';
 
-class ${className}RepositoryImpl extends GenericRepositoryImpl< ${className}> implements ${className}Repository {
-${className}RepositoryImpl(AppSession session) : super(session.${className?uncap_first}CollectionName);
+class ${className}RepositoryImpl extends GenericRepositoryImpl<${className}> implements ${className}Repository {
+  ${className}RepositoryImpl(AppSession session) : super(session, session.${className?uncap_first}CollectionName);
 
-	@override
+  @override
   ${className} fromJson(FirebaseDocument FirebaseDocument) {
-		return  ${className}.fromJson(prepareToJson(FirebaseDocument));
-	}
-
+    return  ${className}.fromJson(prepareToJson(FirebaseDocument));
+  }
 }

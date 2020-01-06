@@ -3,7 +3,6 @@ package com.datacoper.generator;
 import com.datacoper.ConfigurationFreeMarker;
 import com.datacoper.TemplateFreeMarker;
 import com.datacoper.enums.EnumProject;
-import com.datacoper.generator.impl.EnumScaffold;
 import com.datacoper.metadata.TemplateModel;
 import com.datacoper.utils.FileUtil;
 import com.datacoper.utils.LogUtil;

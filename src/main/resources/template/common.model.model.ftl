@@ -34,7 +34,7 @@ part '${classNameFileName}.g.dart';
 <#elseif model.hasAttributeFileInfo()>
 @FileInfoConverter()
 </#if>
-<#if model.isSubDocument()>
+<#if model.isComposite()>
 class ${className} extends EntityMapEvent {
 <#else >
 class ${className} extends EntityEvent {
@@ -107,6 +107,14 @@ class ${className} extends EntityEvent {
     return '${className} {id: $id}';
   }
 
+  Reference<IEntity> toReference() {
+    return Reference.fromEntity(this);
+  }
+
+  static Future<${className}> fromReference(Reference<IEntity> document) async {
+    await document.load();
+    return ${className}.fromJson(document.getJson());
+  }
 </#if>
   @override
   void dispose() {
