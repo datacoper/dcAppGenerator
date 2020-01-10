@@ -107,14 +107,15 @@ class ${className} extends EntityEvent {
     return '${className} {id: $id}';
   }
 
-  Reference<IEntity> toReference() {
-    return Reference.fromEntity(this);
-  }
-
-  static Future<${className}> fromReference(Reference<IEntity> document) async {
+  static Future<${className}> fromReference(Reference document) async {
     await document.load();
     return ${className}.fromJson(document.getJson());
   }
+
+  ${className} create(){
+    return ${className}.fromJson(joinJson());
+  }
+
 </#if>
   @override
   void dispose() {

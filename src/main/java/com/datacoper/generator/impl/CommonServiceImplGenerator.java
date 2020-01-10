@@ -4,20 +4,20 @@ import com.datacoper.generator.AbstractDartGenerator;
 import com.datacoper.metadata.TemplateModel;
 import com.github.underscore.lodash.U;
 
-public class CommonLoaderGenerator extends AbstractDartGenerator {
+public class CommonServiceImplGenerator extends AbstractDartGenerator {
 
-    public CommonLoaderGenerator(TemplateModel templateModel) {
+    public CommonServiceImplGenerator(TemplateModel templateModel) {
 		super(templateModel);
 	}
 
 	@Override
     public String getTemplateName() {
-    	return "common.loader.loader";
+    	return "common.service_impl.service_impl";
     }
 
     @Override
     public String getPackage() {
-        return "base.loader";
+        return "base.service_impl";
     }
 
 	@Override
@@ -27,6 +27,6 @@ public class CommonLoaderGenerator extends AbstractDartGenerator {
 
 	@Override
 	public String getFileName() {
-		return U.snakeCase(getClassName()+"_loader");
+		return U.snakeCase(getClassName()).concat("_service_impl");
 	}
 }

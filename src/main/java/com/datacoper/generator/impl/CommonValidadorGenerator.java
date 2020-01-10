@@ -13,12 +13,12 @@ public class CommonValidadorGenerator extends AbstractDartGenerator {
 	@Override
 
     public String getTemplateName() {
-    	return "common.service.validador";
+    	return "common.validator.validador";
     }
 
     @Override
     public String getPackage() {
-        return "base.service";
+        return "base.validator";
     }
 
 	@Override

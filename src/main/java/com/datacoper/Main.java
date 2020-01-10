@@ -7,14 +7,12 @@ import com.datacoper.generator.AbstractGenerator;
 import com.datacoper.generator.EnumScaffold;
 import com.datacoper.metadata.TemplateAttributeModel;
 import com.datacoper.metadata.TemplateModel;
+import com.datacoper.utils.StringTemplate;
 import com.datacoper.utils.Xml;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
@@ -48,25 +46,27 @@ public class Main {
 //        );
 
         List<String> modelNames = Arrays.asList(
-                //"CaseSistemaMenu"
-//                "IconeSistema"
-//                "CaseSistemaCategoria"
-//                "TemplateCatalogoProduto"
-//                 "NewsTime"
-//                "NewsRecord"
-//                "Onboarding"
-//                "Todo"
-//                "SolicitacaoVisitaTecnica"
-//                "PosicaoFinanceiraTitulos"
-//                "Pedido"
+//                "CaseSistemaMenu",
+//                "IconeSistema",
+//                "CaseSistemaCategoria",
+//                "TemplateCatalogoProduto",
+//                 "NewsTime",
+//                "NewsRecord",
+//                "Onboarding",
+//                "Todo",
+//                "SolicitacaoVisitaTecnica",
+//                "PosicaoFinanceiraTitulos",
+//                "Pedido",
 //                "Vendedor",
 //                "Filial",
 //                "PedidoItem",
-//                "PedidoParcela"
-//                "PosicaoSaldoAgricolaProdutor"
-//                "PosicaoSaldoAgricolaIndicadores"
-//                "CulturaCatalogo"
-                "User", "UserInfo", "UserDevice"
+//                "PedidoParcela",
+//                "PosicaoSaldoAgricolaProdutor",
+//                "PosicaoSaldoAgricolaIndicadores",
+//                "CulturaCatalogo",
+//                "User", "UserInfo", "UserDevice"
+                "UserCadastroDados" //, "ProdutorDadosAdicionais"
+//        "CatalogoProdutoCulturas", "Produtividade"
         );
 
         if (args.length != 0) {
@@ -75,8 +75,12 @@ public class Main {
 
 //        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
         List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+//        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
-        modelNames.forEach(modelName -> gerarCodigo(modelName, new TemplateModel(file), modules));
+        for (String modelName : modelNames) {
+            gerarCodigo(modelName, new TemplateModel(file), modules);
+        }
+
     }
 
     private static void gerarCodigo(String entityName, TemplateModel templateModel, List<EnumProject> modules) {
@@ -111,9 +115,21 @@ public class Main {
 
             ArrayList<Xml> aAttibute = aClassOptional.get().child("attributes").children("attribute");
 
-            aAttibute.forEach(f -> addAttribute(f, xml, templateModel));
+            for (Xml f : aAttibute) {
+                addAttribute(f, xml, templateModel);
+            }
 
-            modules.forEach((module) -> gerar(templateModel, module));
+            for (EnumProject module : modules) {
+                gerar(templateModel, module);
+            }
+
+            StringTemplate t1 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Repository>((i) => ${class}RepositoryImpl(i.getDependency<AppSession>()));");
+            StringTemplate t2 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Service>((i) => ${class}ServiceImpl(i.getDependency<${class}Repository>()));");
+            t1.setBlankNull();
+            Map<String, String> m = new HashMap<>();
+            m.put("class", entityName);
+            System.out.println(t1.substitute(m));
+            System.out.println(t2.substitute(m));
 
         } catch (Exception e) {
             e.printStackTrace();
