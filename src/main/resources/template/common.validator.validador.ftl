@@ -1,10 +1,10 @@
 <#assign entityName = model.entityName>
 <#assign className = model.className?cap_first>
 <#assign classNameFileName = model.classNameFileName>
-import 'package:produtor_common/arquitetura/interfaces/validador_generic_crud.dart';
+import 'package:arquitetura_common/interfaces/validador_generic_crud.dart';
 import 'package:produtor_common/base/model/${classNameFileName}.dart';
 import 'package:produtor_common/base/repository/${classNameFileName}_repository.dart';
-import 'package:produtor_common/base/utils/validate_mandatory_fields.dart';
+import 'package:arquitetura_common/utils/validate_mandatory_fields.dart';
 
 class ${className}Validador extends ValidatorGenericCRUD<${className}> {
   ${className}Repository repository;

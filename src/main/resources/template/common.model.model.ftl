@@ -4,22 +4,22 @@
 import 'dart:async';
 
 import 'package:json_annotation/json_annotation.dart';
-import 'package:produtor_common/arquitetura/event/change_event.dart';
-<#if model.isDocument()>
-import 'package:produtor_common/arquitetura/event/entity_event.dart';
+import 'package:arquitetura_common/event/change_event.dart';
+<#if model.isCollection()>
+import 'package:arquitetura_common/event/entity_event.dart';
 <#else >
-import 'package:produtor_common/arquitetura/event/entity_map_event.dart';
+import 'package:arquitetura_common/event/entity_map_event.dart';
 </#if>
-import 'package:produtor_common/arquitetura/proxy/collection.dart';
-import 'package:produtor_common/arquitetura/interfaces/i_vigencia.dart';
-import 'package:produtor_common/arquitetura/proxy/reference.dart';
-import 'package:produtor_common/base/converters/converter.dart';
+import 'package:arquitetura_common/proxy/collection.dart';
+import 'package:arquitetura_common/interfaces/i_vigencia.dart';
+import 'package:arquitetura_common/proxy/reference.dart';
+import 'package:arquitetura_common/converters/converter.dart';
 <#if model.hasAttributeGeoPoint()>
-import 'package:produtor_common/base/converters/geopoint_converter.dart';
+import 'package:arquitetura_common/converters/geopoint_converter.dart';
 <#elseif model.hasAttributeFileInfo()>
-import 'package:produtor_common/base/converters/file_converter.dart';
+import 'package:arquitetura_common/converters/file_converter.dart';
 </#if>
-import 'package:produtor_common/base/utils/date_util.dart';
+import 'package:arquitetura_common/utils/date_util.dart';
 <#list model.getAttributeImportsDart() as import>
 import 'package:produtor_common/base/model/${import}.dart';
 </#list>

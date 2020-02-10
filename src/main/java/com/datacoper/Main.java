@@ -26,7 +26,7 @@ public class Main {
             throw new Exception("Variavel de ambiente PROJECT_HOME não definida");
         }
 
-        File file = new File(projectHome + "\\AppProdutor-Spec\\Datacoper\\Desenv");
+        File file = new File(projectHome );
 //        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
 //                "EnderecoPostal", "Cidade", "ServicoConsultoria",
 //                "User", "UserNotification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
@@ -65,8 +65,9 @@ public class Main {
 //                "PosicaoSaldoAgricolaIndicadores",
 //                "CulturaCatalogo",
 //                "User", "UserInfo", "UserDevice"
-                "UserCadastroDados" //, "ProdutorDadosAdicionais"
+//                "UserCadastroDados" //, "ProdutorDadosAdicionais"
 //        "CatalogoProdutoCulturas", "Produtividade"
+                "UserFavoritos"
         );
 
         if (args.length != 0) {
@@ -74,7 +75,7 @@ public class Main {
         }
 
 //        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
-        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS);
+        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 //        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
         for (String modelName : modelNames) {
@@ -88,7 +89,7 @@ public class Main {
         templateModel.setClassName(entityName);
         templateModel.setEntityName(entityName);
 
-        File fXmlFile = new File(projectHome + "\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
+        File fXmlFile = new File("C:\\Projetos\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
 
         try {
 

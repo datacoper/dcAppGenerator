@@ -13,7 +13,7 @@ import java.util.List;
 public enum EnumScaffold {
     COMMON_MODEL_GENERATOR              (CommonModelGenerator.class,            EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT, EnumClassMode.COMPOSITE)),
     COMMON_REPOSITORY_GENERATOR         (CommonRepositoryGenerator.class,       EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
-    COMMON_REPOSITORY_IMPL_GENERATOR    (CommonRepositoryImplGenerator.class,   EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT)),
+    COMMON_REPOSITORY_IMPL_GENERATOR    (CommonRepositoryImplGenerator.class,   EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     COMMON_SERVICE_GENERATOR            (CommonServiceGenerator.class,          EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     COMMON_SERVICE_IMPL_GENERATOR       (CommonServiceImplGenerator.class,      EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
     COMMON_VALIDATOR_GENERATOR          (CommonValidadorGenerator.class,        EnumProject.COMMON, Arrays.asList(EnumClassMode.DOCUMENT, EnumClassMode.SUB_DOCUMENT)),
