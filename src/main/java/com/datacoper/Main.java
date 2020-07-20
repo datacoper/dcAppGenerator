@@ -18,7 +18,8 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    private static String projectHome = System.getenv("PROJECT_HOME");
+//    private static String projectHome = System.getenv("PROJECT_HOME");
+    private static String projectHome = "/Users/lucas/Datacoper/App";
 
     public static void main(String[] args) throws Exception {
 
@@ -67,15 +68,15 @@ public class Main {
 //                "User", "UserInfo", "UserDevice"
 //                "UserCadastroDados" //, "ProdutorDadosAdicionais"
 //        "CatalogoProdutoCulturas", "Produtividade"
-                "UserFavoritos"
+                "EnderecoFilial"
         );
 
         if (args.length != 0) {
             modelNames = Arrays.asList(args[0].split(","));
         }
 
-//        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
-        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
+        List<EnumProject> modules = Arrays.asList(EnumProject.FUNCTIONS, EnumProject.COMMON);
+//        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 //        List<EnumProject> modules = Arrays.asList(EnumProject.COMMON);
 
         for (String modelName : modelNames) {
@@ -89,7 +90,7 @@ public class Main {
         templateModel.setClassName(entityName);
         templateModel.setEntityName(entityName);
 
-        File fXmlFile = new File("C:\\Projetos\\ProdutorAppMDM\\gerador\\target", "classesAPPPRODUTOR.xml");
+        File fXmlFile = new File("/Users/lucas/Datacoper/ProdutorAppMDM/gerador/target", "classesAPPPRODUTOR.xml");
 
         try {
 
@@ -251,7 +252,7 @@ public class Main {
             }
         }
 
-        return null;
+        return "";
     }
 
     private static String buscarSubCollectionName(Xml xml, String name) {

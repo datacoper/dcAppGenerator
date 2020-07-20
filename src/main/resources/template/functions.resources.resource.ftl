@@ -1,14 +1,23 @@
 <#if model.isIntegracao() >
-import {BaseResourceIntegracao} from "../../arquitetura/generic/BaseResourceIntegracao";
+import {GenericIntegrationResource} from "../../arquitetura/generic/GenericIntegrationResource";
 <#else >
-import {BaseResourceCrud} from "../../arquitetura/generic/BaseResourceCrud";
+import {GenericResource} from "../../arquitetura/generic/GenericResource";
 </#if>
 import {${model.entityName}} from "../models/${model.entityName}";
+import {${model.entityName}Service} from "../services/${model.entityName}Service";
+import {getCollection} from "../../arquitetura/utils/DatabaseUtils";
+import {Path} from "typescript-rest";
+import {is} from "easy-injectionjs";
 
+@Path(getCollection(${model.entityName}))
 <#if model.isIntegracao() >
-export class ${model.entityName}Resource extends BaseResourceIntegracao<${model.entityName}>{
+export class ${model.entityName}Resource extends GenericIntegrationResource<${model.entityName}>{
 <#else >
-export class ${model.entityName}Resource extends BaseResourceCrud<${model.entityName}>{
+export class ${model.entityName}Resource extends GenericResource<${model.entityName}>{
 </#if>
+
+    constructor() {
+        super(${model.entityName}, is(${model.entityName}Service));
+    }
 
 }
