@@ -68,7 +68,7 @@ public class Main {
 //                "User", "UserInfo", "UserDevice"
 //                "UserCadastroDados" //, "ProdutorDadosAdicionais"
 //        "CatalogoProdutoCulturas", "Produtividade"
-                "EnderecoFilial"
+                "Produtor"
         );
 
         if (args.length != 0) {

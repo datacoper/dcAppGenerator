@@ -7,7 +7,7 @@ export default class ${model.entityName}Module extends GenericModule<${model.ent
 
     constructor(appIntegracao: Express) {
         super({
-            collectionName: ${model.collectionName},
+            collectionName: "${model.collectionName}",
             subCollectionNames: []
         });
 
