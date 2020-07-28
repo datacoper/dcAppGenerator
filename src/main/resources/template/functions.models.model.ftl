@@ -47,4 +47,3 @@ export class ${className} extends IEntity {
 
 </#list>
 }
-

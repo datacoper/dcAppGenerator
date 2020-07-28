@@ -10,24 +10,24 @@ import com.datacoper.metadata.TemplateModel;
 import com.datacoper.utils.StringTemplate;
 import com.datacoper.utils.Xml;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.stream.Collectors;
 
 public class Main {
 
 //    private static String projectHome = System.getenv("PROJECT_HOME");
-    private static String projectHome = "/Users/lucas/Datacoper/App";
+    private static final String projectHome = "/Users/lucas/Datacoper";
 
     public static void main(String[] args) throws Exception {
+
+        executeCommand();
 
         if (projectHome == null) {
             throw new Exception("Variavel de ambiente PROJECT_HOME não definida");
         }
 
-        File file = new File(projectHome );
+        File file = new File(projectHome, "App" );
 //        List<String> modelNames = Arrays.asList("Produtor", "AgendaVisita", "Consultor", "Local", "ServicoAtendimento",
 //                "EnderecoPostal", "Cidade", "ServicoConsultoria",
 //                "User", "UserNotification", "Todo", "UserCommand", "UserCustom", "UserDevice", "UserInfo",
@@ -68,7 +68,9 @@ public class Main {
 //                "User", "UserInfo", "UserDevice"
 //                "UserCadastroDados" //, "ProdutorDadosAdicionais"
 //        "CatalogoProdutoCulturas", "Produtividade"
-                "Produtor"
+//                "ConfiguradorFormulario",
+//                "ConfiguradorFormularioResponsaveis"
+                "Servico"
         );
 
         if (args.length != 0) {
@@ -85,12 +87,32 @@ public class Main {
 
     }
 
+    private static void executeCommand() {
+        String command = "./generate.sh -a -i";
+        String dir = projectHome + "/ProdutorAppMDM/gerador/src/main/scripts/base/";
+
+        System.out.println(command);
+        try {
+//            Process process = Runtime.getRuntime().exec(command);
+            Process process = Runtime.getRuntime().exec(command, null, new File(dir));
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line = "";
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void gerarCodigo(String entityName, TemplateModel templateModel, List<EnumProject> modules) {
 
+        String collectionName = "";
         templateModel.setClassName(entityName);
         templateModel.setEntityName(entityName);
 
-        File fXmlFile = new File("/Users/lucas/Datacoper/ProdutorAppMDM/gerador/target", "classesAPPPRODUTOR.xml");
+        File fXmlFile = new File(projectHome + "/ProdutorAppMDM/gerador/target", "classesAPPPRODUTOR.xml");
 
         try {
 
@@ -99,10 +121,12 @@ public class Main {
             if (isComposite(xml, entityName)) {
                 templateModel.setMode(EnumClassMode.COMPOSITE);
             } else if(isSubCollection(xml, entityName)) {
-                templateModel.setCollectionName(buscarSubCollectionName(xml, entityName));
+                collectionName = buscarSubCollectionName(xml, entityName);
+                templateModel.setCollectionName(collectionName);
                 templateModel.setMode(EnumClassMode.SUB_DOCUMENT);
             }else {
-                templateModel.setCollectionName( buscarCollectionName(xml, entityName));
+                collectionName = buscarCollectionName(xml, entityName);
+                templateModel.setCollectionName( collectionName);
                 templateModel.setMode(EnumClassMode.DOCUMENT);
             }
 
@@ -125,13 +149,16 @@ public class Main {
                 gerar(templateModel, module);
             }
 
-            StringTemplate t1 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Repository>((i) => ${class}RepositoryImpl(i.getDependency<AppSession>()));");
-            StringTemplate t2 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Service>((i) => ${class}ServiceImpl(i.getDependency<${class}Repository>()));");
+            StringTemplate t1 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Service>((i) => ${class}ServiceImpl(i.getDependency<${class}Repository>()));");
+            StringTemplate t2 = new StringTemplate("InjectorManager.injector.registerDependency<${class}Repository>((i) => ${class}RepositoryImpl(i.getDependency<AppSession>()));");
+            StringTemplate t3 = new StringTemplate("registerCollectionName<${class}>('${collectionName}');");
             t1.setBlankNull();
             Map<String, String> m = new HashMap<>();
             m.put("class", entityName);
+            m.put("collectionName", collectionName);
             System.out.println(t1.substitute(m));
             System.out.println(t2.substitute(m));
+            System.out.println(t3.substitute(m));
 
         } catch (Exception e) {
             e.printStackTrace();
